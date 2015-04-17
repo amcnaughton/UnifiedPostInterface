@@ -177,16 +177,33 @@ class Post implements PostInterface
         }
     }
 
+    /**
+     * Is this a WP_Post field?
+     *
+     * @param $key
+     * @return bool
+     */
     protected function is_post_field($key)
     {
         return in_array($key, $this->wp_post_fields);
     }
 
+    /**
+     * Is this post meta data?
+     *
+     * @param $key
+     * @return bool
+     */
     protected function is_post_meta($key)
     {
         return !$this->is_post_field($key);
     }
 
+    /**
+     * Delete the post
+     *
+     * @throws Exception
+     */
     public function delete()
     {
         if (empty($this->post['ID']))
@@ -195,6 +212,12 @@ class Post implements PostInterface
         wp_delete_post($this->post['ID'], true);
     }
 
+    /**
+     * Get a post or post meta data value
+     *
+     * @param $key
+     * @return mixed
+     */
     public function get($key)
     {
         if ($this->is_post_meta($key))
